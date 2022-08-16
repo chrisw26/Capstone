@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.hcl.ecommerce.entity.CreditCard;
 
 @Repository
-public interface CreditCardRepository extends JpaRepository<CreditCard, Long> {
+public interface CreditCardRepository extends JpaRepository<CreditCard, Integer> {
 
 }

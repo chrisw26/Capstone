@@ -3,39 +3,51 @@ package com.hcl.ecommerce.entity;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@Table(name = "products")
 public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long productId;
+	@Column(name="product_id")
+	private Integer id;
 	
-	private String productName;
+	@Column(name = "prod_name", nullable = false)
+	private String name;
 	
-	private String productDescription;
+	@Column(nullable = false)
+	private String description;
 	
-	private String productCategory;
+	@Column(nullable = false)
+	private String category;
 	
-//	private String productImage;
-//	
-//	private int productPrice;
-//	
-//	private int productCount;
+	@Column(nullable = false)
+	private double price;
+	
+	@Column(nullable = false)
+	private String image;
+	
+	@Column(nullable = false)
+	private int count;
 	
 //	@OneToMany(mappedBy="product", cascade=CascadeType.ALL)
 //	private Set<Order> orders;

@@ -7,52 +7,41 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Address {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
+	@Column(nullable = false)
 	private String address1;
 	
 	private String address2;
 	
+	@Column(nullable = false)
 	private String city;
 	
+	@Column(nullable = false)
 	private String state;
 	
+	@Column(nullable = false)
 	private String zipcode;
 	
-//	@ManyToOne
-//	@JoinColumn(name="user_id")
-//	private User user;
-	
-	@OneToOne
-	@JoinColumn(name="user_id")
+	@ManyToOne
+	@JoinColumn(name="user_id", nullable = false)
 	private User user;
-	
-	public Address(String address1, String address2, String city, String state, String zipcode) {
-		this.address1 = address1;
-		this.address2 = address2;
-		this.city = city;
-		this.state = state;
-		this.zipcode = zipcode;
-	}
 
 }

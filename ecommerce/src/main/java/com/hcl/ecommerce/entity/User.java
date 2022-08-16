@@ -1,17 +1,11 @@
 package com.hcl.ecommerce.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-//@Table(name = "users")
+@Table(name = "users")
 public class User {
 	
 	@Id
@@ -33,25 +27,16 @@ public class User {
 	@Column(name="user_id")
 	private Integer id;
 	
+	@Column(nullable = false)
 	private String firstName;
 	
+	@Column(nullable = false)
 	private String lastName;
 	
-	@Column(unique = true)
+	@Column(nullable = false, unique = true)
 	private String email;
 	
+	@Column(nullable = false)
 	private String password;
-	
-//	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-//	private Set<Address> addresses;
-	
-//	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
-//	private Address address;
-	
-//	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-//	private Set<CreditCard> creditCards;
-//	
-//	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-//	private Set<Order> orders;
 
 }

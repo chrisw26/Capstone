@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
@@ -20,26 +21,18 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CreditCard {
-	
+public class Role {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
+	@Column(name = "role_id")
+	private Integer id;
+
 	@Column(nullable = false)
-	private String name;
-	
-	@Column(name = "cc_number", nullable = false, unique = true)
-	private String creditCardNumber;
-	
-	@Column(name = "exp_date", nullable = false)
-	private String expirationDate;
-	
-	@Column(nullable = false)
-	private String securityCode;
-	
+	private String roleName;
+
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable = false)
+	@JoinTable(name = "role_user", joinColumns = @JoinColumn(name = "role_fk"), inverseJoinColumns = @JoinColumn(name = "user_fk"))
 	private User user;
 
 }

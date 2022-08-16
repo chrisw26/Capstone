@@ -2,19 +2,18 @@ package com.hcl.ecommerce.service;
 
 import java.util.List;
 
-import com.hcl.ecommerce.dto.ProductDto;
 import com.hcl.ecommerce.entity.Product;
 
 public interface ProductService {
 
-	Product addProduct(ProductDto productDto);
+	boolean addProduct(Product product);
 	
-	Product getProduct(Long productId);
+	Product getProductById(Integer productId);
 	
-	Product updateProduct(Long productId, String productName);
-
-	void deleteProduct(Long productId);
-
-	List<Product> getAllProducts();
+	void updateProduct(Product product);
+	
+	void deleteProduct(Integer productId);
+	
+	Product getProductByNameAndCategory(String name, String category);
 
 }
