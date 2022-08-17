@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,25 +23,26 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CreditCard {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
+	private Integer id;
+
 	@Column(nullable = false)
 	private String name;
-	
+
 	@Column(name = "cc_number", nullable = false, unique = true)
 	private String creditCardNumber;
 	
 	@Column(name = "exp_date", nullable = false)
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private String expirationDate;
-	
+
 	@Column(nullable = false)
 	private String securityCode;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable = false)
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 }

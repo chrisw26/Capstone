@@ -17,13 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	private MailSenderService mailSenderService;
-	
+
 	@Override
 	public synchronized boolean addUser(User user) {
 		if (getUserByEmail(user.getEmail()) != null) {
@@ -41,12 +41,18 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
+	@Override
 	public User getUserById(Integer userId) {
 		Optional<User> user = userRepository.findById(userId);
-		if (user.isPresent()) return user.get();
+		if (user.isPresent())
+			return user.get();
 		return null;
 	}
-	
+
 	@Override
 	public void updateUser(User user) {
 		User usr = getUserById(user.getId());
@@ -56,17 +62,17 @@ public class UserServiceImpl implements UserService {
 		usr.setPassword(user.getPassword());
 		userRepository.save(usr);
 	}
-	
+
 	@Override
 	public void deleteUser(Integer userId) {
 		userRepository.deleteById(userId);
 	}
-	
+
 	@Override
 	public List<User> getAllUsers() {
 		return userRepository.getAllUsers();
 	}
-	
+
 	@Override
 	public boolean login(String email, String password) {
 		if (getUserByEmailAndPassword(email, password) != null) {
@@ -75,17 +81,12 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
-	
-	@Override
-	public User getUserByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
-	
+
 	@Override
 	public User getUserByEmailAndPassword(String email, String password) {
 		return userRepository.findByEmailAndPassword(email, password);
 	}
-	
+
 //	@Override
 //	public User registerUser(UserDto userDto) {
 //		User user = new User();

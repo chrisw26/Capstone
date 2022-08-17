@@ -28,26 +28,30 @@ import lombok.ToString;
 @ToString
 @Table(name = "users")
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	private Integer id;
-	
+
 	@Column(nullable = false)
 	private String firstName;
-	
+
 	@Column(nullable = false)
 	private String lastName;
-	
+
 	@Column(nullable = false, unique = true)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private String password;
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonIgnore
 	private List<Address> addresses = new ArrayList<>();
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<CreditCard> creditCards = new ArrayList<>();
 
 }

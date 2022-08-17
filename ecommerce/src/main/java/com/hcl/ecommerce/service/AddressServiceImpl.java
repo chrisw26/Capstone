@@ -10,23 +10,24 @@ import com.hcl.ecommerce.repository.AddressRepository;
 
 @Service
 public class AddressServiceImpl implements AddressService {
-	
+
 	@Autowired
 	AddressRepository addressRepository;
-	
+
 	@Override
 	public synchronized boolean addAddress(Address address) {
 		addressRepository.save(address);
 		return true;
 	}
-	
+
 	@Override
 	public Address getAddressById(Integer addressId) {
 		Optional<Address> address = addressRepository.findById(addressId);
-		if (address.isPresent()) return address.get();
+		if (address.isPresent())
+			return address.get();
 		return null;
 	}
-	
+
 	@Override
 	public void updateAddress(Address address) {
 		Address addr = getAddressById(address.getId());
@@ -37,7 +38,7 @@ public class AddressServiceImpl implements AddressService {
 		addr.setZipcode(address.getZipcode());
 		addressRepository.save(addr);
 	}
-	
+
 	@Override
 	public void deleteAddress(Integer addressId) {
 		addressRepository.deleteById(addressId);

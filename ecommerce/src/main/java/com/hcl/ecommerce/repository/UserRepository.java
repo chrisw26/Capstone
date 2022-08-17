@@ -11,10 +11,10 @@ import com.hcl.ecommerce.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
+	User findByEmail(String email);
+	
 	@Query("select u from User u order by u.lastName")
 	List<User> getAllUsers();
-
-	User findByEmail(String email);
 	
 	User findByEmailAndPassword(String email, String password);
 

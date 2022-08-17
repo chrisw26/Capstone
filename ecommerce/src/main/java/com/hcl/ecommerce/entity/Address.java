@@ -25,23 +25,23 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	@Column(nullable = false)
 	private String address1;
-	
+
 	private String address2;
-	
+
 	@Column(nullable = false)
 	private String city;
-	
+
 	@Column(nullable = false)
 	private String state;
-	
+
 	@Column(nullable = false)
 	private String zipcode;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 }

@@ -47,4 +47,10 @@ public class ProductController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping("/products")
+	public ResponseEntity<List<Product>> getAllProducts() {
+		List<Product> list = productService.getAllProducts();
+		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+	}
+	
 }

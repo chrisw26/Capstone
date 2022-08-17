@@ -26,6 +26,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	public Product getProductByNameAndCategory(String name, String category) {
+		return productRepository.findByNameAndCategory(name, category);
+	}
+	
+	@Override
 	public Product getProductById(Integer productId) {
 		Optional<Product> product = productRepository.findById(productId);
 		if (product.isPresent()) return product.get();
@@ -50,8 +55,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public Product getProductByNameAndCategory(String name, String category) {
-		return productRepository.findByNameAndCategory(name, category);
+	public List<Product> getAllProducts() {
+		return productRepository.getAllProducts();
 	}
 
 }
