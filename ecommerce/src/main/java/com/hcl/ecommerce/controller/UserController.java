@@ -64,6 +64,12 @@ public class UserController {
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+	
+	@PutMapping("/user/{roleid}/{userid}")
+	public ResponseEntity<Void> addRoletoUser(@PathVariable("roleid") Integer roleid, @PathVariable("userid") Integer userid) {
+		userService.addRole(roleid, userid);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 
 //	@PostMapping("/register")
 //	public User registerUser(@RequestBody UserDto userDto) {

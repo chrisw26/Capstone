@@ -1,13 +1,25 @@
 package com.hcl.ecommerce.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +33,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Table(name = "roles")
 public class Role {
 
 	@Id
@@ -28,11 +41,31 @@ public class Role {
 	@Column(name = "role_id")
 	private Integer id;
 
-	@Column(nullable = false)
-	private String roleName;
-
-	@ManyToOne
-	@JoinTable(name = "role_user", joinColumns = @JoinColumn(name = "role_fk"), inverseJoinColumns = @JoinColumn(name = "user_fk"))
-	private User user;
+	@Column(name = "role_name", nullable = false)
+	private String name;
+	
+	@ManyToMany(fetch = FetchType.LAZY, 
+			cascade =
+			{
+					CascadeType.DETACH,
+					CascadeType.MERGE,
+					CascadeType.REFRESH,
+					CascadeType.PERSIST
+			},
+			targetEntity = User.class)
+	@JoinTable(name = "user_roles", 
+		joinColumns = @JoinColumn(name = "role_id",
+			nullable = false,
+			updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "user_id", 
+			nullable = false,
+			updatable = false),
+		foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
+		inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+	private final List<User> users = new ArrayList<>();
+	
+	public void addUser(User user) {
+		this.users.add(user);
+	}
 
 }

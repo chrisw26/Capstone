@@ -9,7 +9,9 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.repository.RoleRepository;
 import com.hcl.ecommerce.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
-
+	
+	@Autowired
+	RoleRepository roleRepository;
+	
 	@Autowired
 	private MailSenderService mailSenderService;
 
@@ -85,6 +90,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByEmailAndPassword(String email, String password) {
 		return userRepository.findByEmailAndPassword(email, password);
+	}
+
+	@Override
+	public void addRole(Integer roleId, Integer userId) {
+		User user = getUserById(userId);
+		Role role = getRoleById(roleId);
+		user.addRole(role);
+		userRepository.save(user);
+	}
+	
+	@Override
+	public Role getRoleById(Integer roleId) {
+		Optional<Role> role = roleRepository.findById(roleId);
+		if (role.isPresent())
+			return role.get();
+		return null;
 	}
 
 //	@Override
