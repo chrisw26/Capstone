@@ -1,5 +1,7 @@
 package com.hcl.ecommerce.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,7 +53,8 @@ public class Product {
 	@Column(nullable = false)
 	private int count;
 	
-//	@OneToMany(mappedBy="product", cascade=CascadeType.ALL)
-//	private Set<Order> orders;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+	@JsonIgnore
+	private List<Order> orders = new ArrayList<>();
 
 }

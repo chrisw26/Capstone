@@ -61,6 +61,10 @@ public class User {
 	@JsonIgnore
 	private List<CreditCard> creditCards = new ArrayList<>();
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<Order> orders = new ArrayList<>();
+	
 	@ManyToMany(fetch = FetchType.LAZY, 
 			cascade =
 			{
@@ -85,5 +89,7 @@ public class User {
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
+	
+	
 
 }

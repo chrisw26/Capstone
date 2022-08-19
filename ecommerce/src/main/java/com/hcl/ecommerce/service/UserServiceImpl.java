@@ -34,12 +34,12 @@ public class UserServiceImpl implements UserService {
 		if (getUserByEmail(user.getEmail()) != null) {
 			return false;
 		} else {
-			mailSenderService.sendEmail(user.getEmail());
-			try {
-				mailSenderService.sendEmailWithAttachment(user.getEmail());
-			} catch (MessagingException e) {
-			} catch (IOException e) {
-			}
+//			mailSenderService.sendEmail(user.getEmail());
+//			try {
+//				mailSenderService.sendEmailWithAttachment(user.getEmail());
+//			} catch (MessagingException e) {
+//			} catch (IOException e) {
+//			}
 			userRepository.save(user);
 			return true;
 		}
