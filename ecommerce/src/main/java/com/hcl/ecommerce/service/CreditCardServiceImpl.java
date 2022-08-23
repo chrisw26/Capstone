@@ -30,12 +30,12 @@ public class CreditCardServiceImpl implements CreditCardService {
 
 	@Override
 	public void updateCreditCard(CreditCard creditCard) {
-		CreditCard card = getCreditCardById(creditCard.getId());
-		card.setName(creditCard.getName());
-		card.setCreditCardNumber(creditCard.getCreditCardNumber());
-		card.setExpirationDate(creditCard.getExpirationDate());
-		card.setSecurityCode(creditCard.getSecurityCode());
-		creditCardRepository.save(card);
+		CreditCard cc = getCreditCardById(creditCard.getId());
+		cc.setName(creditCard.getName());
+		cc.setCreditCardNumber(creditCard.getCreditCardNumber());
+		cc.setExpirationDate(creditCard.getExpirationDate());
+		cc.setSecurityCode(creditCard.getSecurityCode());
+		creditCardRepository.save(cc);
 	}
 
 	@Override

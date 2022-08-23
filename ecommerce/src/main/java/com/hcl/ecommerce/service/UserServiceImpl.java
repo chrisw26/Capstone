@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.repository.RoleRepository;
@@ -22,16 +23,25 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	RoleRepository roleRepository;
-	
+
 	@Autowired
 	private MailSenderService mailSenderService;
 
 	@Override
+	public boolean login(UserLoginDto userLoginDto) {
+		if (userRepository.findByEmailAndPassword(userLoginDto.getEmail(), userLoginDto.getPassword()) != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
 	public synchronized boolean addUser(User user) {
-		if (getUserByEmail(user.getEmail()) != null) {
+		if (userRepository.findByEmail(user.getEmail()) != null) {
 			return false;
 		} else {
 //			mailSenderService.sendEmail(user.getEmail());
@@ -43,11 +53,6 @@ public class UserServiceImpl implements UserService {
 			userRepository.save(user);
 			return true;
 		}
-	}
-	
-	@Override
-	public User getUserByEmail(String email) {
-		return userRepository.findByEmail(email);
 	}
 
 	@Override
@@ -79,27 +84,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean login(String email, String password) {
-		if (getUserByEmailAndPassword(email, password) != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public User getUserByEmailAndPassword(String email, String password) {
-		return userRepository.findByEmailAndPassword(email, password);
-	}
-
-	@Override
 	public void addRole(Integer roleId, Integer userId) {
 		User user = getUserById(userId);
 		Role role = getRoleById(roleId);
 		user.addRole(role);
 		userRepository.save(user);
 	}
-	
+
 	@Override
 	public Role getRoleById(Integer roleId) {
 		Optional<Role> role = roleRepository.findById(roleId);

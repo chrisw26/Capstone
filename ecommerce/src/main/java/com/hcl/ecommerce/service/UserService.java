@@ -2,14 +2,15 @@ package com.hcl.ecommerce.service;
 
 import java.util.List;
 
+import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
 
 public interface UserService {
+	
+	boolean login(UserLoginDto userLoginDto);
 
 	boolean addUser(User user);
-	
-	User getUserByEmail(String email);
 
 	User getUserById(Integer userId);
 
@@ -18,10 +19,6 @@ public interface UserService {
 	void deleteUser(Integer userId);
 
 	List<User> getAllUsers();
-
-	boolean login(String email, String password);
-
-	User getUserByEmailAndPassword(String email, String password);
 
 	void addRole(Integer roleId, Integer userId);
 

@@ -1,6 +1,5 @@
 package com.hcl.ecommerce.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +21,12 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public synchronized boolean addRole(Role role) {
-		if (getRoleByName(role.getName()) != null) {
+		if (roleRepository.findByName(role.getName()) != null) {
 			return false;
 		} else {
 			roleRepository.save(role);
 			return true;
 		}
-	}
-	
-	@Override
-	public Role getRoleByName(String name) {
-		return roleRepository.findByName(name);
 	}
 
 	@Override
@@ -53,11 +47,6 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void deleteRole(Integer roleId) {
 		roleRepository.deleteById(roleId);
-	}
-
-	@Override
-	public List<Role> getAllRoles() {
-		return roleRepository.getAllRoles();
 	}
 
 	@Override

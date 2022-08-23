@@ -1,6 +1,9 @@
 package com.hcl.ecommerce.service;
 
+import java.io.IOException;
 import java.util.Optional;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +17,17 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	OrderRepository orderRepository;
 	
+	@Autowired
+	private MailSenderService mailSenderService;
+	
 	@Override
 	public synchronized boolean addOrder(Order order) {
+//		mailSenderService.sendEmail(order.getUser().getEmail());
+//		try {
+//			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
+//		} catch (MessagingException e) {
+//		} catch (IOException e) {
+//		}
 		orderRepository.save(order);
 		return true;
 	}
@@ -30,11 +42,11 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void updateOrder(Order order) {
-		Order o = getOrderById(order.getId());
-		o.setDate(order.getDate());
-		o.setAmount(order.getAmount());
-		o.setStatus(order.getStatus());
-		orderRepository.save(o);
+		Order ord = getOrderById(order.getId());
+		ord.setOrderDate(order.getOrderDate());
+		ord.setOrderTotal(order.getOrderTotal());
+		ord.setOrderStatus(order.getOrderStatus());
+		orderRepository.save(ord);
 	}
 
 	@Override

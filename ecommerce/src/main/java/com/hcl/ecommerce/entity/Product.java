@@ -2,7 +2,6 @@ package com.hcl.ecommerce.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,30 +30,25 @@ import lombok.ToString;
 public class Product {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="product_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="prod_id")
 	private Integer id;
 	
-	@Column(name = "prod_name", nullable = false)
+	@Column(name = "prod_name")
 	private String name;
 	
-	@Column(nullable = false)
-	private String description;
-	
-	@Column(nullable = false)
-	private String category;
-	
-	@Column(nullable = false)
+	@Column(name = "prod_price")
 	private double price;
 	
-	@Column(nullable = false)
+	@Column(name = "prod_image")
 	private String image;
 	
-	@Column(nullable = false)
-	private int count;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<Order> orders = new ArrayList<>();
+	private List<CartItem> cartItems = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<OrderItem> orderItems = new ArrayList<>();
 
 }

@@ -11,7 +11,7 @@ import com.hcl.ecommerce.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	Product findByNameAndCategory(String name, String category);
+	Product findByName(String name);
 	
 	@Query("select p from Product p order by p.name")
 	List<Product> getAllProducts();

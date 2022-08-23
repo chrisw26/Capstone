@@ -3,7 +3,6 @@ package com.hcl.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,10 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.UserService;
 
@@ -25,12 +23,17 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@GetMapping("/login")
+	public ResponseEntity<Void> login(@RequestBody UserLoginDto userLoginDto) {
+		boolean flag = userService.login(userLoginDto);
+		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
 	@PostMapping("/user")
-	public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder builder) {
+	public ResponseEntity<Void> addUser(@RequestBody User user) {
 		boolean flag = userService.addUser(user);
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setLocation(builder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
@@ -56,13 +59,6 @@ public class UserController {
 	public ResponseEntity<List<User>> getAllUsers() {
 		List<User> list = userService.getAllUsers();
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
-	}
-	
-	@GetMapping("/login")
-	public ResponseEntity<Void> loginUser(@RequestParam String email, @RequestParam String password) {
-		boolean flag = userService.login(email, password);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@PutMapping("/user/{roleid}/{userid}")

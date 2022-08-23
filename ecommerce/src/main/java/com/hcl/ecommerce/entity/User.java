@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -53,19 +52,23 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Address> addresses = new ArrayList<>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<CreditCard> creditCards = new ArrayList<>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Cart> carts = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Order> orders = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY, 
+	@ManyToMany(fetch = FetchType.LAZY,
 			cascade =
 			{
 					CascadeType.DETACH,
@@ -83,13 +86,10 @@ public class User {
 			updatable = false),
 		foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
 		inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-	@JsonIgnore
 	private final List<Role> roles = new ArrayList<>();
 	
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
-	
-	
 
 }

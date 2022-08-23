@@ -3,9 +3,9 @@ package com.hcl.ecommerce.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hcl.ecommerce.entity.Order;
+import com.hcl.ecommerce.entity.Cart;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Integer> {
+public interface CartRepository extends JpaRepository<Cart, Integer> {
 
 }

@@ -1,6 +1,5 @@
 package com.hcl.ecommerce.entity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
@@ -30,27 +28,20 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table(name = "orders")
-public class Order {
+@Table(name = "carts")
+public class Cart {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "order_id")
+	@Column(name = "cart_id")
 	private Integer id;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private LocalDate orderDate;
-	
-	private double orderTotal;
-	
-	private String orderStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private List<OrderItem> orderItems = new ArrayList<>();
+	private List<CartItem> cartItems = new ArrayList<>();
 
 }
